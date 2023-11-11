@@ -2,17 +2,41 @@
 @model ContactsVM
 
 <h3>Contact List</h3>
-<form asp-action="UpdateAllContacts" asp-controller="Contact" method="post">
-    <ul>
-        @for (var i = 0; i < Model.Contacts.Count; i++)
-        {
-            <li>
-                <input type="hidden" asp-for="@Model.Contacts[i].Id" />
-                <input asp-for="@Model.Contacts[i].Name" />
-                <input asp-for="@Model.Contacts[i].MobilePhone" />
-                <input asp-for="@Model.Contacts[i].JobTitle" />
-            </li>
-        }
-    </ul>
-    <button type="submit">Save All</button>
-</form>
+<div id="addContactModal" class="modal">
+    <div class="modal-content">
+        <form id="addContactForm" asp-controller="Contact" asp-action="AddContact" method="post">
+            <input type="text" id="addName" name="Name" placeholder="Name">
+            <input type="text" id="addMobilePhone" name="MobilePhone" placeholder="Mobile Phone">
+            <input type="text" id="addJobTitle" name="JobTitle" placeholder="Job Title">
+            <button type="submit">Add Contact</button>
+        </form>
+    </div>
+</div>
+
+<!-- Модальное окно редактирования контакта -->
+<div id="editContactModal" class="modal">
+    <div class="modal-content">
+        <form id="editContactForm" asp-controller="Contact" asp-action="UpdateContact" method="post">
+            <input type="text" id="contactId" name="Id" style="display: none">
+            <input type="text" id="editName" name="Name" placeholder="Name">
+            <input type="text" id="editMobilePhone" name="MobilePhone" placeholder="Mobile Phone">
+            <input type="text" id="editJobTitle" name="JobTitle" placeholder="Job Title">
+            <button type="submit">Update</button>
+        </form>
+    </div>
+</div>
+<button onclick="openAddContactModal()">Add Contact</button>
+
+<ul>
+    @foreach (var contact in Model.Contacts)
+    {
+        <li>
+            @contact.Name - @contact.JobTitle
+            <button onclick="openEditContactModal(@contact.Id)">Edit</button>
+            <form asp-action="DeleteContact" asp-controller="Contact" method="post">
+                <input type="hidden" name="Id" value="@contact.Id" />
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    }
+</ul>
