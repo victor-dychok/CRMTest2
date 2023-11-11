@@ -1,0 +1,18 @@
+﻿@using CRMTest2.Views.ViewModels;
+@model ContactsVM
+
+<h3>Contact List</h3>
+<form asp-action="UpdateAllContacts" asp-controller="Contact" method="post">
+    <ul>
+        @for (var i = 0; i < Model.Contacts.Count; i++)
+        {
+            <li>
+                <input type="hidden" asp-for="@Model.Contacts[i].Id" />
+                <input asp-for="@Model.Contacts[i].Name" />
+                <input asp-for="@Model.Contacts[i].MobilePhone" />
+                <input asp-for="@Model.Contacts[i].JobTitle" />
+            </li>
+        }
+    </ul>
+    <button type="submit">Save All</button>
+</form>
