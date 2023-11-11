@@ -1,5 +1,6 @@
 ﻿using CRMTest2.Core.Interfaces;
 using CRMTest2.Models.Enities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRMTest2.Core.Repositories
 {
@@ -10,35 +11,34 @@ namespace CRMTest2.Core.Repositories
         public ContactRepository(CRMAppContext context)
         {
             _context = context;
-            _context.Database.EnsureCreated();
         }
 
-        public Contact GetById(int id)
+        public async Task<Contact> GetById(int id)
         {
-            return _context.Set<Contact>().Find(id);
+            return await _context.Set<Contact>().FindAsync(id);
         }
 
-        public List<Contact> GetAll()
+        public async Task<List<Contact>> GetAll()
         {
-            return _context.Set<Contact>().ToList();
+            return await _context.Set<Contact>().ToListAsync();
         }
 
-        public void Add(Contact contact)
+        public async Task Add(Contact contact)
         {
-            _context.Set<Contact>().Add(contact);
-            _context.SaveChangesAsync();
+            await _context.Set<Contact>().AddAsync(contact);
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(Contact contact)
+        public async Task Update(Contact contact)
         {
             _context.Set<Contact>().Update(contact);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(Contact contact)
+        public async Task Delete(Contact contact)
         {
             _context.Set<Contact>().Remove(contact);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

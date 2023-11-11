@@ -4,10 +4,10 @@ namespace CRMTest2.Core.Interfaces
 {
     public interface IContactRepository
     {
-        Contact GetById(int id);
-        List<Contact> GetAll();
-        void Add(Contact contact);
-        void Update(Contact contact);
-        void Delete(Contact contact);
+        Task<Contact> GetById(int id);
+        Task<List<Contact>> GetAll();
+        Task Add(Contact contact);
+        Task Update(Contact contact);
+        Task Delete(Contact contact);
     }
 }

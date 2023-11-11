@@ -24,7 +24,7 @@ namespace CRMTest2.Controllers
                 JobTitle = "C# .NET dev",
                 BirthDate = new DateOnly(2011, 11, 1)
             });*/
-            var contactsVM = new ContactsVM(_ContactRepository.GetAll());
+            var contactsVM = new ContactsVM(_ContactRepository.GetAll().Result);
             return View(contactsVM);
         }
 
