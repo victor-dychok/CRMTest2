@@ -11,6 +11,7 @@ namespace CRMTest2.Core.Repositories
         public ContactRepository(CRMAppContext context)
         {
             _context = context;
+            _context.Database.EnsureCreated();
         }
 
         public async Task<Contact> GetById(int id)

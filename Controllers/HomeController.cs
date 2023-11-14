@@ -19,11 +19,6 @@ namespace CRMTest2.Controllers
             return RedirectToAction("Index", "Contact");
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

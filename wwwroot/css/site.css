@@ -18,5 +18,69 @@ body {
 }
 
 .modal {
-    display: none;
+    padding-top: 40px;
+    margin-left: 40%;
+    margin-top: 10%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px black;
+    width: 20%;
+    height: 55%;
+    gap: 10px;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 10px;
+}
+
+.list{
+}
+
+.list-item {
+    padding: 10px;
+}
+
+.input-line {
+    padding: 5px;
+    border-radius: 5px;
+    border-color: #8884FF;
+}
+
+.target-button {
+    background-color: #8884FF;
+    border-width: 2px;
+    border-color: #8884FF;
+    padding: 7px;
+    border-radius: 5px;
+    color: white;
+}
+
+.nontarget-button {
+    background-color: white;
+    border-width: 2px;
+    border-color: #8884FF;
+    padding: 7px;
+    border-radius: 5px;
+    color: #8884FF;
+}
+
+.optional-target-button {
+    background-color: #D7BCE8;
+    border-width: 2px;
+    border-color: #D7BCE8;
+    padding: 7px;
+    border-radius: 5px;
+    color: white;
+}
+
+.optional-nontarget-button {
+    background-color: white;
+    border-width: 2px;
+    border-color: #D7BCE8;
+    padding: 7px;
+    border-radius: 5px;
+    color: #D7BCE8;
 }
