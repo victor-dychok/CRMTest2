@@ -2,27 +2,27 @@
 @model ContactsVM
 
 <h3>Contact List</h3>
-<div id="addContactModal" class="modal">
+
+<!-- Popup окно добавления контакта -->
+<div id="addContactModal" onclick="closeAllModals()" class="modal">
     <form id="addContactForm" asp-controller="Contact" asp-action="AddContact" method="post" class="modal-form">
         <input type="text" class="input-line" id="addName" name="Name" placeholder="Name">
         <input type="text" class="input-line" id="addMobilePhone" name="MobilePhone" placeholder="Mobile Phone">
         <input type="text" class="input-line" id="addJobTitle" name="JobTitle" placeholder="Job Title">
         <input type="date" class="input-line" id="addBirthDate" name="BirthDate">
-        <button type="submit" class="target-button" style="margin-top: 50px">Add Contact</button>
-        <button onclick="closeAddContactModal()" class="nontarget-button">Cancel</button>
+        <button type="submit" class="target-button" style="margin-top: auto">Add Contact</button>
     </form>
 </div>
 
-<!-- Модальное окно редактирования контакта -->
-<div id="editContactModal" class="modal">
+<!-- Popup окно редактирования контакта -->
+<div id="editContactModal" onclick="closeAllModals()" class="modal">
     <form id="editContactForm" asp-controller="Contact" asp-action="UpdateContact" method="post" class="modal-form">
         <input type="text" id="contactId" name="Id" style="display: none">
         <input type="text" class="input-line" id="editName" name="Name" placeholder="Name">
         <input type="text" class="input-line" id="editMobilePhone" name="MobilePhone" placeholder="Mobile Phone">
         <input type="text" class="input-line" id="editJobTitle" name="JobTitle" placeholder="Job Title">
         <input type="date" class="input-line" id="editBirthDate" name="BirthDate">
-        <button type="submit" class="target-button" style="margin-top: 50px">Update</button>
-        <button onclick="closeEditContactModal()" class="nontarget-button">Cancel</button>
+        <button type="submit" class="target-button" style="margin-top: auto">Update</button>
     </form>
 </div>
 <button onclick="openAddContactModal()" class="target-button">Add Contact</button>

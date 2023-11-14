@@ -1,22 +1,9 @@
 ﻿const addContactForm = document.getElementById('addContactForm');
 const editContactForm = document.getElementById('editContactForm');
-
-function openAddContactModal() {
-    closeEditContactModal();
-    let addContactModal = document.getElementById('addContactModal');
-    addContactModal.style.display = 'flex';
-}
-
-function closeAddContactModal() {
-
-    let addContactModal = document.getElementById('addContactModal');
-    addContactModal.style.display = 'none';
-}
-
 const contactList = document.getElementById('contactList');
 
 contactList.addEventListener('click', function (event) {
-    
+
     const clickedElement = event.target;
 
     // проверяем, был ли клик на записи списка контактов
@@ -30,8 +17,7 @@ contactList.addEventListener('click', function (event) {
             button.style.display = 'none';
         });
 
-        closeAddContactModal();
-        closeEditContactModal();
+        closeAllModals();
 
         // делаем видимыми кнопки на выбранном элементе
         const editButton = clickedElement.querySelector('.editButton');
@@ -41,6 +27,40 @@ contactList.addEventListener('click', function (event) {
     }
 });
 
+addContactForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    if (validateContactForm(addContactForm, "addName", "addMobilePhone", "addJobTitle", "addBirthDate")) {
+        addContactForm.submit();
+    }
+});
+
+editContactForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    if (validateContactForm(editContactForm, "editName", "editMobilePhone", "editJobTitle", "editBirthDate")) {
+        editContactForm.submit();
+    }
+})
+
+document.getElementById('addContactForm').addEventListener('click', function (event) {
+    event.stopPropagation();
+});
+document.getElementById('editContactForm').addEventListener('click', function (event) {
+    event.stopPropagation();
+});
+
+function openAddContactModal() {
+    closeEditContactModal();
+    let addContactModal = document.getElementById('addContactModal');
+    addContactModal.style.display = 'flex';
+}
+
+function closeAddContactModal() {
+
+    let addContactModal = document.getElementById('addContactModal');
+    addContactModal.style.display = 'none';
+}
 function openEditContactModal(contactId) {
     closeAddContactModal();
     let editContactModal = document.getElementById('editContactModal');
@@ -49,11 +69,11 @@ function openEditContactModal(contactId) {
     fetch(`/Contact/GetContact?id=${contactId}`)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             document.getElementById('contactId').value = data.id;
             document.getElementById('editName').value = data.name;
             document.getElementById('editMobilePhone').value = data.mobilePhone;
-            document.getElementById('editBirthDate').value = data.birthDate;
+            let birthDateOnly = data.birthDate.substring(0, 10);
+            document.getElementById('editBirthDate').value = birthDateOnly;
             document.getElementById('editJobTitle').value = data.jobTitle;
 
             editContactModal.style.display = 'flex';
@@ -71,10 +91,13 @@ function validateContactForm(form, nameElementId, phoneElementId, jobTitleElemen
     let mobilePhone = form.querySelector('#' + phoneElementId).value;
     let jobTitle = form.querySelector('#' + jobTitleElementId).value;
     let birthDate = form.querySelector('#' + birthDateElemetnId).value;
-    console.log(birthDate);
 
     if (name === '') {
         alert('Please enter a name');
+        return false;
+    }
+    else if (!(/^[a-zA-Z]+$/.test(name))) {
+        alert('Name must contain only letters of the Latin alphabet');
         return false;
     }
 
@@ -83,29 +106,49 @@ function validateContactForm(form, nameElementId, phoneElementId, jobTitleElemen
         alert('Please enter a phone');
         return false;
     }
+    else if (!/^(\+|[0-9])\d*$/.test(mobilePhone))
+    {
+        alert('The mobile phone number must consist of numbers only');
+        return false;
+    }
+    else if (!((mobilePhone.startsWith("80") && mobilePhone.length === 11) || (mobilePhone.startsWith("+375") && mobilePhone.length === 13))) {
+        alert('Incorrect phone format. (only +375/80 + 9 numbers)')
+        return false;
+    }
 
     if (jobTitle === '') {
         alert('Please enter a job title');
         return false;
     }
 
+
+
+    if (birthDate === '') {
+        alert('Please enter birth date');
+        return false;
+    }
+    else {
+        const birthDateInDate = new Date(birthDate);
+        const currentDate = new Date();
+        const eighteenYearsAgo = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
+        if (birthDateInDate > eighteenYearsAgo) {
+            alert('You are too young (you must be at least 18 years old');
+            return false;
+        }
+    }
+
     return true;
 }
 
+function closeAllModals()
+{
 
-// привязка функции валидации к событию submit
-addContactForm.addEventListener('submit', function (e) {
-    e.preventDefault();
+    closeEditContactModal();
+    closeAddContactModal();
+}
 
-    if (validateContactForm(addContactForm, "addName", "addMobilePhone", "addJobTitle", "addBirthDate")) {
-        addContactForm.submit();
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        closeAllModals();
     }
 });
-
-editContactForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    if (validateContactForm(editContactForm, "editName", "editMobilePhone", "editJobTitle", "editBirthDate")) {
-        editContactForm.submit();
-    }
-})
