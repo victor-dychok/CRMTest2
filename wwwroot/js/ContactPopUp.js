@@ -87,57 +87,83 @@ function closeEditContactModal(contactId) {
 }
 
 function validateContactForm(form, nameElementId, phoneElementId, jobTitleElementId, birthDateElemetnId) {
-    let name = form.querySelector('#' + nameElementId).value;
-    let mobilePhone = form.querySelector('#' + phoneElementId).value;
-    let jobTitle = form.querySelector('#' + jobTitleElementId).value;
-    let birthDate = form.querySelector('#' + birthDateElemetnId).value;
+
+    let nameElement = document.getElementById(nameElementId);
+    let mobilePhoneElement = document.getElementById(phoneElementId);
+    let jobTitleElement = document.getElementById(jobTitleElementId);
+    let birthDateElement = document.getElementById(birthDateElemetnId);
+    let success = true;
+    let errorMessage = '';
+
+    let name = nameElement.value;
+    let mobilePhone = mobilePhoneElement.value;
+    let jobTitle = jobTitleElement.value;
+    let birthDate = birthDateElement.value;
 
     if (name === '') {
-        alert('Please enter a name');
-        return false;
+        nameElement.classList.add('incorrect-input');
+        errorMessage += 'Please enter a name\n'
+        success = false;
     }
     else if (!(/^[a-zA-Z]+$/.test(name))) {
-        alert('Name must contain only letters of the Latin alphabet');
-        return false;
+        nameElement.classList.add('incorrect-input');
+        errorMessage += 'Name must contain only letters of the Latin alphabet\n';
+        success = false;
     }
 
 
     if (mobilePhone === '') {
-        alert('Please enter a phone');
-        return false;
+        errorMessage += 'Please enter a phone\n';
+        success = false;
+
+        mobilePhoneElement.classList.add('incorrect-input');
     }
     else if (!/^(\+|[0-9])\d*$/.test(mobilePhone))
     {
-        alert('The mobile phone number must consist of numbers only');
-        return false;
+        errorMessage += 'The mobile phone number must consist of numbers only\n';
+        success = false;
+        mobilePhoneElement.classList.add('incorrect-input');
     }
     else if (!((mobilePhone.startsWith("80") && mobilePhone.length === 11) || (mobilePhone.startsWith("+375") && mobilePhone.length === 13))) {
-        alert('Incorrect phone format. (only +375/80 + 9 numbers)')
-        return false;
+        errorMessage += 'Incorrect phone format. (only +375/80 + 9 numbers)\n';
+        success = false;
+        mobilePhoneElement.classList.add('incorrect-input');
     }
 
     if (jobTitle === '') {
-        alert('Please enter a job title');
-        return false;
+        errorMessage += 'Please enter a job title\n'
+        success = false;
+        jobTitleElement.classList.add('incorrect-input');
     }
 
 
 
     if (birthDate === '') {
-        alert('Please enter birth date');
-        return false;
+        errorMessage += 'Please enter birth date\n';
+        success = false;
+        birthDateElement.classList.add('incorrect-input');
     }
     else {
         const birthDateInDate = new Date(birthDate);
         const currentDate = new Date();
         const eighteenYearsAgo = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
+        const hunderedYearsAgo = new Date(currentDate.getFullYear() - 100, currentDate.getMonth(), currentDate.getDate());
         if (birthDateInDate > eighteenYearsAgo) {
-            alert('You are too young (you must be at least 18 years old');
-            return false;
+            errorMessage += 'You are too young (you must be at least 18 years old\n';
+            success = false;
+            birthDateElement.classList.add('incorrect-input');
+        }
+        else if (birthDateInDate < hunderedYearsAgo) {
+            errorMessage += 'You are too old\n';
+            success = false;
+            birthDateElement.classList.add('incorrect-input');
         }
     }
 
-    return true;
+    if (errorMessage !== '') {
+        alert(errorMessage);
+    }
+    return success;
 }
 
 function closeAllModals()
@@ -152,3 +178,9 @@ document.addEventListener('keydown', function (event) {
         closeAllModals();
     }
 });
+
+function removeIncorrectInputClass(element) {
+    if (element && element.classList.contains('incorrect-input')) {
+        element.classList.remove('incorrect-input');
+    }
+}

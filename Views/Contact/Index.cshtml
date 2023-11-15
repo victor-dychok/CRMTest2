@@ -6,10 +6,11 @@
 <!-- Popup окно добавления контакта -->
 <div id="addContactModal" onclick="closeAllModals()" class="modal">
     <form id="addContactForm" asp-controller="Contact" asp-action="AddContact" method="post" class="modal-form">
-        <input type="text" class="input-line" id="addName" name="Name" placeholder="Name">
-        <input type="text" class="input-line" id="addMobilePhone" name="MobilePhone" placeholder="Mobile Phone">
-        <input type="text" class="input-line" id="addJobTitle" name="JobTitle" placeholder="Job Title">
-        <input type="date" class="input-line" id="addBirthDate" name="BirthDate">
+        <h3>Add contact</h3>
+        <input type="text" class="input-line" onmousedown="removeIncorrectInputClass(this)" id="addName" name="Name" placeholder="Name">
+        <input type="text" class="input-line" onmousedown="removeIncorrectInputClass(this)" id="addMobilePhone" name="MobilePhone" placeholder="Mobile Phone">
+        <input type="text" class="input-line" onmousedown="removeIncorrectInputClass(this)" id="addJobTitle" name="JobTitle" placeholder="Job Title">
+        <input type="date" class="input-line" onmousedown="removeIncorrectInputClass(this)" id="addBirthDate" name="BirthDate">
         <button type="submit" class="target-button" style="margin-top: auto">Add Contact</button>
     </form>
 </div>
@@ -17,11 +18,12 @@
 <!-- Popup окно редактирования контакта -->
 <div id="editContactModal" onclick="closeAllModals()" class="modal">
     <form id="editContactForm" asp-controller="Contact" asp-action="UpdateContact" method="post" class="modal-form">
+        <h3>Edit contact</h3>
         <input type="text" id="contactId" name="Id" style="display: none">
-        <input type="text" class="input-line" id="editName" name="Name" placeholder="Name">
-        <input type="text" class="input-line" id="editMobilePhone" name="MobilePhone" placeholder="Mobile Phone">
-        <input type="text" class="input-line" id="editJobTitle" name="JobTitle" placeholder="Job Title">
-        <input type="date" class="input-line" id="editBirthDate" name="BirthDate">
+        <input type="text" class="input-line" onmousedown="removeIncorrectInputClass(this)" id="editName" name="Name" placeholder="Name">
+        <input type="text" class="input-line" onmousedown="removeIncorrectInputClass(this)" id="editMobilePhone" name="MobilePhone" placeholder="Mobile Phone">
+        <input type="text" class="input-line" onmousedown="removeIncorrectInputClass(this)" id="editJobTitle" name="JobTitle" placeholder="Job Title">
+        <input type="date" class="input-line" onmousedown="removeIncorrectInputClass(this)" id="editBirthDate" name="BirthDate">
         <button type="submit" class="target-button" style="margin-top: auto">Update</button>
     </form>
 </div>

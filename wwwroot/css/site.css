@@ -50,6 +50,10 @@ body {
     border-color: #8884FF;
 }
 
+.incorrect-input {
+    border-color: red;
+}
+
 .target-button {
     background-color: #8884FF;
     border-width: 2px;
